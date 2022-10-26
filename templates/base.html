@@ -15,10 +15,15 @@
             margin: 1em 0;
             padding: 0;
         }
+
         .important {
             color: #6495ED;
         }
     </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.2.1-dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.2.0-web/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sweetalert2/sweetalert2.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.2.2-dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.2.0-web/css/all.min.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -26,28 +31,85 @@
 
 <body>
     {% block menu %}
+
+    {% if request.args.get('msg'): %}
+    <h3>{{ request.args.get('msg') }}</h3>
+    <br>
+    {% elif msg: %}
+    <h3>{{ msg }}</h3>
+    <br>
+    {% elif request.args.get('msgErro'): %}
+    <h3>{{ request.args.get('msgErro') }}</h3>
+    <br>
+    {% elif msgErro: %}
+    <h3>{{ msgErro }}</h3>
+    <br>
+    {% endif %}
+
+    {% if request.args.get('msg'): %}
+    <script>
+        Swal.fire({
+            title: 'Sucesso',
+            text: '{{ request.args.get("msg") }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    {% elif msg: %}
+    <script>
+        Swal.fire({
+            title: 'Sucesso',
+            text: '{{ msg }}',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    {% elif request.args.get('msgErro'): %}
+    <script>
+        Swal.fire({
+            title: 'Erro',
+            text: "{{ request.args.get('msgErro') }}",
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    {% elif msgErro: %}
+    <script>
+        Swal.fire({
+            title: 'Erro',
+            text: '{{ msgErro }}',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    </script>
+    {% endif %}
+
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{{ url_for('index.formIndex') }}">AppPastelaria</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item m-1"><a href="{{ url_for('index.formIndex') }}"><i class="fas fa-home"></i> HOME</a></li>
-                <li class="nav-item m-1"><a href="{{ url_for('funcionario.formListaFuncionario') }}"><i
-                    class="fas fa-cart-arrow-down"></i> FUNCIONÁRIOS</a></li>
-                <li class="nav-item m-1"><a href="{{ url_for('cliente.formListaCliente') }}"><i class="fas fa-users"></i> CLIENTES</a></li>
-                <li class="nav-item m-1"><a href="{{ url_for('produto.formListaProduto') }}"><i class="fas fa-pizza-slice"></i> PRODUTOS</a></li>
-            </ul>
-          </div>
+            <a class="navbar-brand" href="{{ url_for('index.formIndex') }}">AppPastelaria</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item m-1"><a href="{{ url_for('index.formIndex') }}"><i class="fas fa-home"></i>
+                            HOME</a></li>
+                    <li class="nav-item m-1"><a href="{{ url_for('funcionario.formListaFuncionario') }}"><i
+                                class="fas fa-cart-arrow-down"></i> FUNCIONÁRIOS</a></li>
+                    <li class="nav-item m-1"><a href="{{ url_for('cliente.formListaCliente') }}"><i
+                                class="fas fa-users"></i> CLIENTES</a></li>
+                    <li class="nav-item m-1"><a href="{{ url_for('produto.formListaProduto') }}"><i
+                                class="fas fa-pizza-slice"></i> PRODUTOS</a></li>
+                </ul>
+            </div>
         </div>
-      </nav>
+    </nav>
     <ul>
-        
-        
-        
-        
+
+
+
+
     </ul>
     {% endblock %}
     <div class="container-fluid mt-3">
@@ -60,6 +122,13 @@
     {% block js %}{% endblock %}
     <script src="{{ url_for('static', filename='bootstrap-5.2.2-dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='fontawesome-free-6.2.0-web/js/all.js') }}"></script>
+
+    <!-- monitorar log do navegador, pois a ordem interfere -->
+    <script src="{{ url_for('static', filename='jquery-3.6.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.maskedinput.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-5.2.1-dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='fontawesome-free-6.2.0-web/js/all.js') }}"></script>
+    <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
 </body>
 
 </html>
